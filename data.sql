@@ -1,0 +1,1 @@
+inser INTO user VALUES(101,"Cyrille","cyrrile@gmail.com",123456,now())
