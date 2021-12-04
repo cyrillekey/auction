@@ -2,7 +2,6 @@ package com.bidding.auction.exception;
 
 import java.util.Date;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +29,15 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleFieldNotFound(Exception ex,WebRequest request){
         ExceptionResponse exceptionResponse=new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse,HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(DateExpiredException.class)
+    public final ResponseEntity<Object> handleExpiry(Exception ex,WebRequest request){
+        ExceptionResponse exceptionResponse=new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(PasswordMismatchException.class)
+    public final ResponseEntity<Object> handlePasswordMismatch(Exception ex,WebRequest request){
+        ExceptionResponse exceptionResponse=new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(true));
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
 }

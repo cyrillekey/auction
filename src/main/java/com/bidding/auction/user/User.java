@@ -1,16 +1,22 @@
 package com.bidding.auction.user;
 
 import java.util.Date;
+import java.util.List;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import com.bidding.auction.Transaction.Transaction;
+import com.bidding.auction.bids.Bid;
+import com.bidding.auction.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -19,6 +25,7 @@ public class User {
     @GeneratedValue
     private Integer userId;
     @NotNull
+    @Column(unique = true)
     private String username;
     @NotNull
     private String email;
@@ -26,9 +33,16 @@ public class User {
     private String password;
     @Past
     private Date datejoined;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "userProduct")
+    private List<Product>products;
+    @JsonIgnore
+    @OneToMany(mappedBy="user")
+    private List<Bid> bids;
+    @OneToMany(mappedBy="userTrans")
+    private List<Transaction> transactions;
     User(){
-
+        
     }
     public User(Integer userId,String username,String email,String passoword,Date datejoined){
         this.userId=userId;
@@ -66,6 +80,24 @@ public class User {
     }
     public String getUsername() {
         return username;
+    }
+    public void setProductsList(List<Product> productsList) {
+        this.products = productsList;
+    }
+    public List<Product> getProductsList() {
+        return products;
+    }
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
+    public List<Bid> getBids() {
+        return bids;
+    }
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
     @Override
     public String toString() {

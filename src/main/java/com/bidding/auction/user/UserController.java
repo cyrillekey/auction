@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.bidding.auction.exception.FieldNotFoundException;
+import com.bidding.auction.exception.PasswordMismatchException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,17 @@ public class UserController {
         User saveduser=userRepository.save(newUser);
         URI location=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveduser.getUserId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+    @PostMapping("/login-user")
+    public User logInUser(@Valid @RequestBody LoginDetails login){
+        Optional<User> user=userRepository.findByUsername(login.getUsername());
+        if(!user.isPresent()){
+            throw new FieldNotFoundException("user does not exist");
+        }
+        if(!(user.get().getPassword()).equals(login.getPassword())){
+            throw new PasswordMismatchException("passwords do not match");
+        }
+        
+        return user.get();
     }
 }
