@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import com.bidding.auction.Transaction.Transaction;
 import com.bidding.auction.bids.Bid;
+import com.bidding.auction.events.Event;
 import com.bidding.auction.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,6 +43,8 @@ public class User {
     private List<Bid> bids;
     @OneToMany(mappedBy="userTrans")
     private List<Transaction> transactions;
+    @ManyToMany
+    private List<Event> events;
     User(){
         
     }
@@ -99,6 +103,10 @@ public class User {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+    public List<Event> getEvents() {
+        return events;
+    }
+
     @Override
     public String toString() {
         return String.format("[id:%s,email:%s,username:%s,date-joined:%s]",userId,email,username,datejoined);

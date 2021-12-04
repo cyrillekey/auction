@@ -4,13 +4,20 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Past;
 
+import com.bidding.auction.events.Event;
 import com.bidding.auction.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 
 @Entity
 public class Bundle {
@@ -25,6 +32,9 @@ public class Bundle {
     @OneToMany(mappedBy = "bundleProduct")
     private List<Product> products;
     private Float bundlePrice;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
+    private Event oneEvent;
     protected Bundle(){
 
     }
@@ -67,6 +77,12 @@ public class Bundle {
     }
     public String getImage_url() {
         return image_url;
+    }
+    public Event getOneEvent() {
+        return oneEvent;
+    }
+    public void setOneEvent(Event oneEvent) {
+        this.oneEvent = oneEvent;
     }
     public List<Product> getProducts() {
         return products;

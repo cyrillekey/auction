@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Past;
 
@@ -40,7 +41,7 @@ public class Product{
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Bid> bids;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Bundle bundleProduct;
     Product(){
 
