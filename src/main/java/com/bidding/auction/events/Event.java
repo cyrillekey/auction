@@ -72,6 +72,9 @@ public class Event {
     }public void setEventStartingTime(Date eventStartingTime) {
         this.eventStartingTime = eventStartingTime;
     }
+    public void setUsersEvents(List<User> usersEvents) {
+        this.usersEvents = usersEvents;
+    }
     @Override
     public String toString() {
         return String.format("[event_id:%s,eventName:%s,eventStartingDate:%s,eventEndDate:%s]", eventId,eventName,eventStartingTime,eventEndDate);

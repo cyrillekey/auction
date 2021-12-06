@@ -14,13 +14,15 @@ import com.bidding.auction.exception.FieldNotFoundException;
 import com.bidding.auction.product.Product;
 import com.bidding.auction.product.ProductRepository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -45,6 +47,7 @@ public class BundleController {
         }
         return oneBundle.get();
     }
+    //TODO fix adding a new bundle
     @PostMapping(path="/create-bundle/{event_id}")
     public ResponseEntity<Object> createNewBundle(@Valid @PathVariable Integer event_id,@RequestBody Bundle bundle){
         List<Product> expiredProduct=new ArrayList<>();
@@ -53,15 +56,18 @@ public class BundleController {
             throw new FieldNotFoundException("event does not exist");
         }
         List<Product> productBelonging=productRepository.findAll();
-        bundle.setOneEvent(event.get());
+        
        for (Product product : productBelonging) {
            if (product.getExpiry().after(new Date())) {
-               expiredProduct.add(product);
+               product.setBundleProduct(bundle);
+               System.out.println("product 1 added to list");
            }
        }
-        bundle.setProducts(expiredProduct);
-        bundleRepository.save(bundle);
 
+         bundle.setProducts(expiredProduct);
+        bundle.setOneEvent(event.get());
+        bundleRepository.save(bundle);
+        
 
         URI location=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(bundle.getBundleId()).toUri();
         return ResponseEntity.created(location).build();

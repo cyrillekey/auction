@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class BidsController {
@@ -69,7 +71,7 @@ public class BidsController {
         return ResponseEntity.created(location).build();
 
     } 
-    //TODO add method to find bids on a specific product
+    
     @GetMapping(path="/bid-by-product/{id}")
     public List<Bid> bidsByProductId(@PathVariable Integer id){
         Optional<Product> product=productRepository.findById(id);
@@ -91,9 +93,6 @@ public class BidsController {
         return userBids.get().getBids();
     }
     //find bid by user and product
-    //TODO fix to get specific product by user
-    
-    
     @GetMapping(value="/bid-by-user/{id}/product/{product}")
     public List<Bid> bidByUserAndproduct(@PathVariable Integer id,@PathVariable Integer product){
         List<Bid> bids=new ArrayList<>();
@@ -114,5 +113,10 @@ public class BidsController {
             
         return bids;
     }
+    @GetMapping(value="/get-winning-bid-by-product/{product_id}")
+    public List<Bid> getMethodName(@PathVariable Integer product_id) {
+        return bidsRepository.findWinningBid(product_id);
+    }
+    
 }
 

@@ -43,6 +43,7 @@ public class User {
     private List<Bid> bids;
     @OneToMany(mappedBy="userTrans")
     private List<Transaction> transactions;
+    @JsonIgnore
     @ManyToMany
     private List<Event> events;
     User(){
@@ -106,7 +107,9 @@ public class User {
     public List<Event> getEvents() {
         return events;
     }
-
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
     @Override
     public String toString() {
         return String.format("[id:%s,email:%s,username:%s,date-joined:%s]",userId,email,username,datejoined);

@@ -1,11 +1,16 @@
 package com.bidding.auction.user;
 
+import java.lang.StackWalker.Option;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 
+import com.bidding.auction.events.Event;
+import com.bidding.auction.events.EventRepository;
 import com.bidding.auction.exception.FieldNotFoundException;
 import com.bidding.auction.exception.PasswordMismatchException;
 
@@ -22,7 +27,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private EventRepository eventRepository;
 
     @GetMapping(path="/get-all-users")
     public List<User> getAllUsers(){
@@ -53,5 +59,27 @@ public class UserController {
         }
         
         return user.get();
+    }
+    @PostMapping("/register-user/{user_id}/to-event/{event_id}")
+    public ResponseEntity<Object> registerUserForEvent(@PathVariable Integer event_id,@PathVariable Integer user_id){
+        List<User> usersList=new ArrayList<>();
+        List<Event> eventList=new ArrayList<>();
+        Optional<User> userExists=userRepository.findById(user_id);
+        Optional<Event> eventPresent=eventRepository.findById(event_id);
+        if(!userExists.isPresent()){
+            throw new FieldNotFoundException("user not found id-"+user_id);
+        }
+        if(!eventPresent.isPresent()){
+            throw new FieldNotFoundException("event does not exist id-"+event_id);
+        }
+
+        usersList.add(userExists.get());
+        eventList.add(eventPresent.get());
+        eventPresent.get().setUsersEvents(usersList);
+        userExists.get().setEvents(eventList);
+        eventRepository.save(eventPresent.get());
+        userRepository.save(userExists.get());
+        URI location=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(eventPresent.get().getEventId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
