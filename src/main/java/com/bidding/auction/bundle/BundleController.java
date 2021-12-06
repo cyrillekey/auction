@@ -1,6 +1,8 @@
 package com.bidding.auction.bundle;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,18 +45,21 @@ public class BundleController {
         }
         return oneBundle.get();
     }
-    @PostMapping(path="/create-bundle/{event_id}/product/product_id")
-    public ResponseEntity<Object> createNewBundle(@Valid @PathVariable Integer event_id,@PathVariable Integer product_id,@RequestBody Bundle bundle){
+    @PostMapping(path="/create-bundle/{event_id}")
+    public ResponseEntity<Object> createNewBundle(@Valid @PathVariable Integer event_id,@RequestBody Bundle bundle){
+        List<Product> expiredProduct=new ArrayList<>();
         Optional<Event> event=eventRepository.findById(event_id);
         if(!event.isPresent()){
             throw new FieldNotFoundException("event does not exist");
         }
-        Optional<Product> productBelonging=productRepository.findById(product_id);
-        if(!productBelonging.isPresent()){
-            throw new FieldNotFoundException("product not found id-"+product_id);
-        }
+        List<Product> productBelonging=productRepository.findAll();
         bundle.setOneEvent(event.get());
-       // bundle.setProducts(products);
+       for (Product product : productBelonging) {
+           if (product.getExpiry().after(new Date())) {
+               expiredProduct.add(product);
+           }
+       }
+        bundle.setProducts(expiredProduct);
         bundleRepository.save(bundle);
 
 

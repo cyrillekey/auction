@@ -3,6 +3,7 @@ package com.bidding.auction.events;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Event {
     private Date eventEndDate;
     @ManyToMany(mappedBy = "events")
     private List<User> usersEvents;
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "oneEvent")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "oneEvent",cascade = CascadeType.REMOVE)
     private Bundle eventBundle;
     protected Event(){
 
