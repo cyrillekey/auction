@@ -26,8 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@CrossOrigin
+
 @RestController
+@CrossOrigin
 public class BidsController {
     @Autowired
     protected BidsRepository bidsRepository;
