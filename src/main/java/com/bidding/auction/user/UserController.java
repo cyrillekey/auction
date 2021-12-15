@@ -1,13 +1,11 @@
 package com.bidding.auction.user;
 
-import java.lang.StackWalker.Option;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
 
 import com.bidding.auction.events.Event;
 import com.bidding.auction.events.EventRepository;

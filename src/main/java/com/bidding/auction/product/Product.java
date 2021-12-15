@@ -43,6 +43,7 @@ public class Product{
     private List<Bid> bids;
     @OneToOne(fetch = FetchType.LAZY)
     private Bundle bundleProduct;
+    private User bidWinner;
     Product(){
 
     }
@@ -100,6 +101,12 @@ public class Product{
     }
     public void setBundleProduct(Bundle bundleProduct) {
         this.bundleProduct = bundleProduct;
+    }
+    public void setBidWinner(User bidWinner) {
+        this.bidWinner = bidWinner;
+    }
+    public User getBidWinner() {
+        return bidWinner;
     }   
     @Override
     public String toString() {
