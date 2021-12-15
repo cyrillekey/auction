@@ -3,8 +3,10 @@ package com.bidding.auction.shipping;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.bidding.auction.product.Product;
 
@@ -14,6 +16,7 @@ public class Shipping {
     @GeneratedValue
     private Integer shippingId;
     private String shippingLocation;
+    @OneToOne(fetch=FetchType.LAZY,mappedBy="productShipping")
     private Product shippedProduct;
     private Date shippingDate;
     private Date estimatedArrivalDate;

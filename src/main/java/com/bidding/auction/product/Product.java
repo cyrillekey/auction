@@ -1,4 +1,5 @@
 package com.bidding.auction.product;
+import com.bidding.auction.shipping.Shipping;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class Product{
     @OneToOne(fetch = FetchType.LAZY)
     private Bundle bundleProduct;
     private User bidWinner;
+    @OneToOne(fetch=FetchType.LAZY)
+    private Shipping productShipping; 
     Product(){
 
     }
