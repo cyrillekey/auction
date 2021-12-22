@@ -30,6 +30,7 @@ public class User {
     @Column(unique = true)
     private String username;
     @NotNull
+    @Column(unique = true)
     private String email;
     @Size(min = 6)
     private String password;

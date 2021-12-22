@@ -51,7 +51,7 @@ public class UserController {
     }
     @PostMapping("/login-user")
     public User logInUser(@Valid @RequestBody LoginDetails login){
-        Optional<User> user=userRepository.findByUsername(login.getUsername());
+        Optional<User> user=userRepository.findByEmail(login.getEmail());
         if(!user.isPresent()){
             throw new FieldNotFoundException("user does not exist");
         }

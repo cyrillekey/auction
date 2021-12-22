@@ -1,27 +1,27 @@
 package com.bidding.auction.user;
 
 public class LoginDetails {
-    private String username;
+    private String email;
     private String password;
 
-    public LoginDetails(String username,String password){
-        this.username=username;
+    public LoginDetails(String email,String password){
+        this.email=email;
         this.password=password;
     }
     public String getPassword(){
         return password;
     }
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
     @Override
     public String toString() {
-        return String.format("[password:%s,username:%s]", password,username);
+        return String.format("[password:%s,email:%s]", password,email);
     }
 }
