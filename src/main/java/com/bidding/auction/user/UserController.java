@@ -2,6 +2,7 @@ package com.bidding.auction.user;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,7 @@ public class UserController {
     }
     @PostMapping("/register-new")
     public ResponseEntity<Object> saveNewUser(@Valid @RequestBody User newUser){
+        newUser.setDatejoined(new Date());
         User saveduser=userRepository.save(newUser);
         URI location=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveduser.getUserId()).toUri();
         return ResponseEntity.created(location).build();
