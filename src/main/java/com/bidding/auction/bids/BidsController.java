@@ -62,7 +62,7 @@ public class BidsController {
         if(!user.isPresent()){
             throw new FieldNotFoundException("user not found id="+user_id);
         }
-        if((product.get().getExpiry()).after(new Date())){
+        if((new Date()).after(product.get().getExpiry())){
             throw new DateExpiredException("product expired");
         }
         newbid.setUser(user.get());
