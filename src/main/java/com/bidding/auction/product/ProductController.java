@@ -75,7 +75,7 @@ public class ProductController {
     }
     @GetMapping(path="/find-product/{name}")
     public List<Product> findProduct(@PathVariable String name){
-        List <Product> productResonse=productRepository.findByPnameContaining(name);
+        List <Product> productResonse=productRepository.findByPnameContaining(name,"null");
         
         return productResonse;
     }
