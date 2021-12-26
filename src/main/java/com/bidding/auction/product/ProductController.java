@@ -74,13 +74,10 @@ public class ProductController {
         productRepository.deleteById(id);
     }
     @GetMapping(path="/find-product/{name}")
-    public Product findProduct(@PathVariable String name){
-        Optional<Product> productResonse=productRepository.findByPname(name);
-        if(!productResonse.isPresent()){
-            throw new FieldNotFoundException("product not found");
-
-        }
-        return productResonse.get();
+    public List<Product> findProduct(@PathVariable String name){
+        List <Product> productResonse=productRepository.findByPnameContaining(name);
+        
+        return productResonse;
     }
 
 }
