@@ -12,6 +12,7 @@ import com.bidding.auction.user.UserRepository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties.Throttler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,6 +72,15 @@ public class ProductController {
     @DeleteMapping(path="/delete-product-by-id/{id}")
     public void deleteUser(@PathVariable Integer id){
         productRepository.deleteById(id);
+    }
+    @GetMapping(path="/find-product/{name}")
+    public Product findProduct(@PathVariable String name){
+        Optional<Product> productResonse=productRepository.findByPname(name);
+        if(!productResonse.isPresent()){
+            throw new FieldNotFoundException("product not found");
+
+        }
+        return productResonse.get();
     }
 
 }
