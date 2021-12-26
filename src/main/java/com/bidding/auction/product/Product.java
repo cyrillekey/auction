@@ -106,7 +106,7 @@ public class Product{
         this.bundleProduct = bundleProduct;
     }
     public void setBidWinner(Integer bidWinnerId) {
-        this.bidWinnerid = bidWinnerid;
+        this.bidWinnerid = bidWinnerId;
     }
     public Integer getBidWinner() {
         return bidWinnerid;
