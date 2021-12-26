@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer>{
-    @Query(value = "SELECT * from product where pname LIKE %:pname%" ,nativeQuery = true)
+    @Query(value = "SELECT * from product where pname LIKE %:pname% and bidWinner='null'" ,nativeQuery = true)
     List<Product> findByPnameContaining ( @Param("pname")String pname);
 }
