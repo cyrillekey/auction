@@ -79,7 +79,7 @@ public class ProductController {
         
         return productResonse;
     }
-    @GetMapping(path="/set-winning-bid/product/id/bid/bid")
+    @GetMapping(path="/set-winning-bid/product/{id}/bid/{bid}")
     public void setWinning(@PathVariable Integer id,@PathVariable Integer bid){
         Optional<Product> prod=productRepository.findById(id);
         if(!prod.isPresent()){
