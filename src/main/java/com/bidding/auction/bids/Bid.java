@@ -21,7 +21,6 @@ public class Bid {
     private Integer bid_id;
     private Integer bid_price;
     private Date time_placed;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @JsonIgnore
