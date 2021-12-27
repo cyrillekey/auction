@@ -85,7 +85,7 @@ public class ProductController {
         if(!prod.isPresent()){
             throw new FieldNotFoundException("product not found");
         }
-        prod.get().setBidWinner(id);
+        prod.get().setBidWinner(bid);
         productRepository.save(prod.get());
 
     }
