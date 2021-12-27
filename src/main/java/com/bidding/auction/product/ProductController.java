@@ -79,5 +79,15 @@ public class ProductController {
         
         return productResonse;
     }
+    @GetMapping(path="/set-winning-bid/product/id/bid/bid")
+    public void setWinning(@PathVariable Integer id,@PathVariable Integer bid){
+        Optional<Product> prod=productRepository.findById(id);
+        if(!prod.isPresent()){
+            throw new FieldNotFoundException("product not found");
+        }
+        prod.get().setBidWinner(id);
+        productRepository.save(prod.get());
+
+    }
 
 }
