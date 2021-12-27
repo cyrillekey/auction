@@ -65,6 +65,9 @@ public class Bid {
     public Product getProduct() {
         return product;
     }
+    public User getUser() {
+        return user;
+    }
     @Override
     public String toString() {
         return String.format("[id:%s,bid-price:%s,time-palced:%s]", bid_id,bid_price,time_placed);
