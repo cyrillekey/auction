@@ -68,9 +68,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			       <plugin>
-                <groupId>com.bidding</groupId>
+                <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>${frontend-maven-plugin.version}</version>
+                <version>LATEST_VERSION</version>
 
                 <configuration>
                     <nodeVersion>${node.version}</nodeVersion>
